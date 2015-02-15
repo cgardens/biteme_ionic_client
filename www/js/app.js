@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.services', 'starter.auth.controllers', 'starter.recipe.controllers', 'starter.search.controllers'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -30,73 +30,35 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
-    url: "/tab",
-    abstract: true,
-    templateUrl: "templates/tabs.html"
-  })
+   // .state('home', {
+   //    url: '/',
+   //    templateUrl: 'templates/authentication.html',
+   //    controller: 'AuthCtrl as a'
+   //  })
 
-  // Each tab has its own nav history stack:
+   //  .state('search', {
+   //    url: '/search',
+   //    templateUrl: 'templates/search_form.html',
+   //    controller: 'SearchFormCtrl as sf'
+   //  })
 
-  .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
-
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
-      }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
+    .state('search_results', {
+      url: '/search_results',
+      templateUrl: 'templates/search_results.html',
+      controller: 'SearchResultCtrl as sr'
     })
 
-  .state('tab.friends', {
-      url: '/friends',
-      views: {
-        'tab-friends': {
-          templateUrl: 'templates/tab-friends.html',
-          controller: 'FriendsCtrl'
-        }
-      }
-    })
-    .state('tab.friend-detail', {
-      url: '/friend/:friendId',
-      views: {
-        'tab-friends': {
-          templateUrl: 'templates/friend-detail.html',
-          controller: 'FriendDetailCtrl'
-        }
-      }
+    .state('recipe', {
+      url: '/recipes/:recipeId',
+      templateUrl: 'templates/recipe_show.html',
+      controller: 'RecipeCtrl as r'
     })
 
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
+    // .state('user', {
+    //   url: '/users/:userId',
+    //   templateUrl: 'templates/user_show.html',
+    //   controller: 'UserCtrl as u'
+    // })
+
+    $urlRouterProvider.otherwise('/');
   });
-
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
-
-});

@@ -1,0 +1,13 @@
+<div>
+
+  <div id='textToSpeech'>
+    <p ng-bind='caesarSpeech'></p>
+    <textarea id='text' ng-bind='caesarSpeech'></textarea>
+    <input id='playButton' onclick="responsiveVoice.speak($('#text').val(),$('#voiceselection').val());" type='button' value='Play'
+    />
+  </div>
+
+  <div id='timer'>
+    <p ng-bind='seconds' ng-show='seconds > 0'></p>
+  </div>
+</div>
