@@ -1,6 +1,7 @@
 angular.module('starter.recipe.controllers', [])
 
-  .controller('RecipeCtrl', function($scope, $http, $stateParams) {
+  .controller('RecipeCtrl', function($scope, $http, $stateParams, recipe) {
+    $scope.recipe = recipe;
     // get request
     $http.get('http://localhost:3000/recipes/' + $stateParams.recipeId)
     .success(function(data) { $scope.recipe = data; })

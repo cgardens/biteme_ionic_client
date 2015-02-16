@@ -60,5 +60,5 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.auth.controller
     //   controller: 'UserCtrl as u'
     // })
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/search_results');
   });

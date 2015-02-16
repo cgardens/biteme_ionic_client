@@ -1,24 +1,23 @@
 <ion-view>
- <ion-content>
-<img ng-src='{{recipe.imageURL}}' alt='recipe photo' />
-<h1 ng-bind='recipe.title'></h1>
-<h2 ng-bind='recipe.description' ng-show='recipe.description.length != 0'></h2>
-<h4>Rating: <span ng-bind='recipe.rating'></span></h4>
-<h4>Servings: <span ng-bind='recipe.servings.yieldNumber'></span></h4>
-<h4>Ingredients:</h4>
-<p ng-repeat='ingredient in recipe.ingredients' ng-bind='ingredient'></p>
-<h4>Instructions:</h4>
-<p ng-repeat='instruction in recipe.instructions' ng-bind='instruction'><p>
+  <ion-content>
+    <img ng-src='{{recipe.imageURL}}' alt='recipe photo' />
+    <h1 ng-bind='recipe.title'></h1>
+    <h2 ng-bind='recipe.description' ng-show='recipe.description.length != 0'></h2>
+    <h4>Rating: <span ng-bind='recipe.rating'></span></h4>
+    <h4>Servings: <span ng-bind='recipe.servings.yieldNumber'></span></h4>
+    <h4>Ingredients:</h4>
+    <p ng-repeat='ingredient in recipe.ingredients' ng-bind='ingredient'></p>
+    <h4>Instructions:</h4>
+    <p ng-repeat='instruction in recipe.instructions' ng-bind='instruction'><p>
 
-<div id='textToSpeech'>
-  <p ng-bind='caesarSpeech'></p>
-  <textarea id='text' ng-bind='caesarSpeech'></textarea>
-  <input id='playButton' onclick="responsiveVoice.speak($('#text').val(),$('#voiceselection').val());" type='button' value='Play'
-  />
-</div>
-
-<div id='timer'>
-  <p ng-bind='seconds' ng-show='seconds > 0'></p>
-</div>
-</ion-content>
+    <div id='textToSpeech'>
+      <p ng-bind='caesarSpeech'></p>
+      <textarea id='text' ng-bind='caesarSpeech'></textarea>
+      <input id='playButton' onclick="responsiveVoice.speak($('#text').val(),$('#voiceselection').val());" type='button' value='Play'
+      />
+    </div>
+    <div id='timer'>
+      <p ng-bind='seconds' ng-show='seconds > 0'></p>
+    </div>
+  </ion-content>
 </ion-view>
