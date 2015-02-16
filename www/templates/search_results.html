@@ -7,8 +7,8 @@
         <button ng-click="getSearchResults()">Search</button>
       </form>
         <ion-list>
-          <ion-item ng-repeat='recipe in recipes.results'>
-            <a ui-sref='#/recipes/{{recipe.recipeID}}'><h2>{{recipe.title}}</h2></a>
+          <ion-item ng-repeat='recipe in recipes.results' href='#/recipes/{{recipe.recipeID}}'>
+            <h2>{{recipe.title}}</h2></a>
               <!-- <a href='#/recipes/{{recipe.recipeID}}'><h2>{{recipe.title}}</h2></a> -->
             <p>Rating: {{recipe.rating | number:1}} out of 5</p>
             <img ng-src='{{recipe.imageURL}}' alt='recipe photo' style="width:100%">
