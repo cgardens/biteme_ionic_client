@@ -48,7 +48,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.auth.controller
       controller: 'SearchResultCtrl as sr'
     })
 
-    .state('recipe', {
+    .state('search_results.recipe', {
       url: '/recipes/:recipeId',
       templateUrl: 'templates/recipe_show.html',
       controller: 'RecipeCtrl as r'
