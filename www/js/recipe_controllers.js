@@ -14,7 +14,7 @@ angular.module('starter.recipe.controllers', [])
     };
 
     $scope.findStep = function() {
-      return $scope.recipe.instructions[$scope.currentStep]
+      return $scope.recipe.instructions[$scope.currentStep];
     };
 
     $scope.findIngredient = function(inputIngredient) {
@@ -22,7 +22,6 @@ angular.module('starter.recipe.controllers', [])
       for (var key in ingredients) {
         if (ingredients[key].toLowerCase().indexOf(inputIngredient.toLowerCase()) >= 0) {
           return ingredients[key];
-          break;
         }
       }
     };
@@ -49,14 +48,12 @@ angular.module('starter.recipe.controllers', [])
     };
 
     // set timer
-
-
     $scope.setTimer = function(seconds) {
       $scope.seconds = seconds * 60;
       var countdown = setInterval('setTimer()', 1000);
       if ($scope.seconds === 0) { clearInterval(countdown); }
       else { seconds--; }
-    }
+    };
 
     // $scope.resetTime(seconds) {
     //   var minutes = Math.round((seconds - 30)/60);
@@ -134,17 +131,17 @@ angular.module('starter.recipe.controllers', [])
             ingredient = ingredient.substr(0, length);
             if (ingredient[length - 1] === 'e') {
               ingredient = ingredient.substr(0, length - 1);
-            };
-          };
+            }
+          }
           $scope.activateCaesar($scope.findIngredient(ingredient));
         },
         'how many *ingredient': function(ingredient) {
           var length = ingredient.length - 1;
-          if (ingredient[length] === 's') { ingredient = ingredient.substr(0, length) };
+          if (ingredient[length] === 's') { ingredient = ingredient.substr(0, length); }
           $scope.activateCaesar($scope.findIngredient(ingredient));
         },
 
-        // timer ingredients
+        // timer commands
         'caesar set timer for *time minutes': function(minutes) {
           $scope.setTimer(minutes);
           $scope.activateCaesar('I have set the timer for ' + minutes + ' minutes');
@@ -162,5 +159,5 @@ angular.module('starter.recipe.controllers', [])
 
       annyang.addCommands(commands);
       annyang.start();
-    };
-  })
+    }
+  });
