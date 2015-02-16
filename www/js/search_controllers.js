@@ -1,11 +1,12 @@
 angular.module('starter.search.controllers', [])
 
   .controller('SearchFormCtrl', function($scope, $http, $stateParams) {
-    $scope;
+    $scope
   })
 
   .controller('SearchResultCtrl', function($scope, $http, $stateParams) {
     $scope.searches = [];
+
     $scope.newSearch = { term: '' };
 
     $scope.getSearchResults = function() {
