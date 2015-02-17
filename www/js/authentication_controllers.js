@@ -1,34 +1,38 @@
-// angular.module('starter.controllers', [])
+angular.module('starter.auth.controllers', ['ngStorage'])
 
-// .controller('DashCtrl', function($scope) {})
+  .controller('AuthCtrl', ['$scope', '$http','$localStorage', '$location', function($scope, $http, $localStorage, $location) {
 
-// .controller('ChatsCtrl', function($scope, Chats) {
-//   $scope.chats = Chats.all();
-//   $scope.remove = function(chat) {
-//     Chats.remove(chat);
-//   }
-// })
+    $scope.signUp = function(new_user) {
+      $http.post('http://localhost:3000/users/signup/', {
+        firstName: new_user.signup_first_name,
+        email:     new_user.signup_email,
+        password:  new_user.signup_password
+      })
+      .success(function(res, body) {
+        if (res.type === false) {
+          $scope.error = res.data;
+        } else {
+          $localStorage.token = res.token;
+          $localStorage.userID = res.data._id;
+          $scope.state.go("search_results")
+        }
+      });
+    };
 
-// .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-//   $scope.chat = Chats.get($stateParams.chatId);
-// })
+    $scope.login = function(user) {
+      $http.post('http://localhost:3000/authenticate', {
+        email: user.login_email,
+        password: user.login_password
+      })
+      .success(function(res, body) {
+        $localStorage.token = res.token;
+        $localStorage.userID = res.data._id;
+        if (res.type === false) { $scope.error = res.data; }
+      });
+    };
 
-// .controller('FriendsCtrl', function($scope, Friends) {
-//   $scope.friends = Friends.all();
-// })
-
-// .controller('FriendDetailCtrl', function($scope, $stateParams, Friends) {
-//   $scope.friend = Friends.get($stateParams.friendId);
-// })
-
-// .controller('AccountCtrl', function($scope) {
-//   $scope.settings = {
-//     enableFriends: true
-//   };
-// });
-
-angular.module('starter.auth.controllers', [])
-
-  .controller('AuthCtrl', function($scope, $http) {
-    $scope
-  });
+    $scope.logout = function() {
+      delete $localStorage.userID;
+      delete $localStorage.token;
+    };
+  }]);

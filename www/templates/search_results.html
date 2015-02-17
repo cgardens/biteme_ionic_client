@@ -1,19 +1,19 @@
 
 <ion-view view-title="Bite Me">
   <ion-content>
+    <form ng-show='newSearch'>
+      <input ng-model='newSearch.term' type='text' placeholder='Enter Recipe...'>
+      <button ng-click="getSearchResults()">Search</button>
+    </form>
     <ul>
-      <form ng-show='newSearch'>
-        <input ng-model='newSearch.term' type='text' placeholder='Enter Recipe...'>
-        <button ng-click="getSearchResults()">Search</button>
-      </form>
-        <ion-list>
-          <ion-item ng-repeat='recipe in recipes.results' href='#/recipes/{{recipe.recipeID}}'>
-            <h2>{{recipe.title}}</h2></a>
-              <!-- <a href='#/recipes/{{recipe.recipeID}}'><h2>{{recipe.title}}</h2></a> -->
-            <p>Rating: {{recipe.rating | number:1}} out of 5</p>
-            <img ng-src='{{recipe.imageURL}}' alt='recipe photo' style="width:100%">
-          </ion-item>
-        <ion-list>
+      <ion-list>
+        <ion-item ng-repeat='recipe in recipes.results' href='#/recipes/{{recipe.recipeID}}'>
+          <h2>{{recipe.title}}</h2></a>
+            <!-- <a href='#/recipes/{{recipe.recipeID}}'><h2>{{recipe.title}}</h2></a> -->
+          <p>Rating: {{recipe.rating | number:1}} out of 5</p>
+          <img ng-src='{{recipe.imageURL}}' alt='recipe photo' style="width:100%">
+        </ion-item>
+      <ion-list>
     </ul>
   </ion-content>
 </ion-view>

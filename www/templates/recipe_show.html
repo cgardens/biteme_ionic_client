@@ -1,23 +1,37 @@
 <ion-view view-title="Bite Me">
   <ion-content>
-    <img ng-src='{{recipe.imageURL}}' alt='recipe photo' />
+    <img ng-src='{{recipe.imageURL}}' alt='recipe photo' style="width:100%"/>
     <h1 ng-bind='recipe.title'></h1>
     <h2 ng-bind='recipe.description' ng-show='recipe.description.length != 0'></h2>
-    <h4>Rating: <span ng-bind='recipe.rating'></span></h4>
-    <h4>Servings: <span ng-bind='recipe.servings.yieldNumber'></span></h4>
-    <h4>Ingredients: </h4>
-    <p ng-repeat='ingredient in recipe.ingredients' ng-bind='ingredient'></p>
-    <h4>Instructions:</h4>
-    <p ng-repeat='instruction in recipe.instructions' ng-bind='instruction'><p>
+    <h3>Rating: <span ng-bind='recipe.rating | number: 1'></span></h3>
+    <h3>Servings: <span ng-bind='recipe.servings.yieldNumber'></span></h3>
 
-    <div id='textToSpeech'>
-      <p ng-bind='caesarSpeech'></p>
-      <textarea id='text' ng-bind='caesarSpeech'></textarea>
-      <input id='playButton' onclick="responsiveVoice.speak($('#text').val(),$('#voiceselection').val());" type='button' value='Play'/>
+    <button ng-click='saveRecipe()' ng-show='saved == false'>Save this recipe</button>
+    <p ng-show='saved == true'>You've saved this recipe.</p>
+
+    <h4>Ingredients:</h4>
+    <ul>
+      <li ng-repeat='ingredient in ingredients track by $index' ng-bind='ingredient | fraction'></li>
+    </ul>
+    <h4>Instructions:</h4>
+    <ol>
+      <li ng-repeat='instruction in instructions track by $index' ng-bind='instruction'></li>
+    <ol>
+
+    <button ng-click='startCaesar()' ng-show='inProgress == false'>Start</button>
+    <button ng-click='stopCaesar()' ng-show='inProgress == true'>Stop</button>
+
+    <p ng-bind='caesarSpeech'></p>
+
+    <div id='countdown'>
+      <p ng-bind='seconds' ng-show='seconds > 0'></p>
+      <p ng-bind='seconds | formatTime' ng-show='seconds > 0'></p>
     </div>
 
-    <div id='timer'>
-      <p ng-bind='seconds' ng-show='seconds > 0'></p>
+    <div id='textToSpeech'>
+      <textarea id='text' ng-bind='caesarSpeech'></textarea>
+      <input id='playButton' onclick="responsiveVoice.speak($('#text').val(),$('#voiceselection').val());" type='button' value='Play'
+      />
     </div>
   </ion-content>
 </ion-view>

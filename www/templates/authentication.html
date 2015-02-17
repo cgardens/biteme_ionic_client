@@ -1,0 +1,17 @@
+<ion-view view-title="Bite Me">
+  <ion-content>
+    <p ng-bind='error' style='color: red'></p>
+    <form>
+      <input ng-model='new_user.signup_first_name' type='text' placeholder='Caesar'>
+      <input ng-model='new_user.signup_email' type='email' placeholder='caesar@gmail.com'>
+      <input ng-model='new_user.signup_password' type='password' placeholder='********'>
+      <button ng-click='signUp(new_user)' >Sign Up</button>
+    </form>
+    <form>
+      <input ng-model='user.login_email' type='email' placeholder='caesar@gmail.com'>
+      <input ng-model='user.login_password' type='password' placeholder='********'>
+      <button ng-click='login(user)'>Login</button>
+    </form>
+    <button ng-click='logout()'>Logout</button>
+  </ion-content>
+</ion-view>

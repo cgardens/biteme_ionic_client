@@ -1,0 +1,9 @@
+<h1>Hi, <span ng-bind='user.firstName'></span>!</h1>
+<h2>Your recipes:</h2>
+<ul>
+  <li ng-repeat='recipe in recipes'>
+    <img ng-src='{{recipe.imageURL}}' alt='recipe photo' />
+    <h3 ng-bind='recipe.title'></h3>
+    <h4>Rating: <span ng-bind='recipe.rating'></span></h4>
+  </li>
+</ul>
