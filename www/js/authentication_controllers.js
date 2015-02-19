@@ -10,7 +10,7 @@ angular.module('starter.auth.controllers', ['ngStorage'])
       })
       .success(function(res, body) {
         if (res.type === false) {
-          $scope.error = res.data;
+          $scope.signup_error = res.data;
         } else {
           $localStorage.token = res.token;
           $localStorage.userID = res.data._id;
@@ -25,9 +25,12 @@ angular.module('starter.auth.controllers', ['ngStorage'])
         password: user.login_password
       })
       .success(function(res, body) {
-        $localStorage.token = res.token;
-        $localStorage.userID = res.data._id;
-        if (res.type === false) { $scope.error = res.data; }
+        if (res.type === false) {
+          $scope.login_error = res.data;
+        } else {
+          $localStorage.token = res.token;
+          $localStorage.userID = res.data._id;
+        }
       });
     };
 
@@ -35,4 +38,9 @@ angular.module('starter.auth.controllers', ['ngStorage'])
       delete $localStorage.userID;
       delete $localStorage.token;
     };
+
+    $scope.userLoggedIn = function() {
+      if ($localStorage.userID) { return true; }
+      else { return false; }
+    }
   }]);

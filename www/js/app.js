@@ -55,7 +55,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.auth.controller
     })
 
     .state('user', {
-      url: '/user',
+      url: '/users',
       templateUrl: 'templates/user_show.html',
       controller: 'UserCtrl as u'
     })

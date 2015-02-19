@@ -21,7 +21,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.auth.controller
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -30,17 +30,17 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.auth.controller
   $stateProvider
 
   // setup an abstract state for the tabs directive
-   // .state('home', {
-   //    url: '/',
-   //    templateUrl: 'templates/authentication.html',
-   //    controller: 'AuthCtrl as a'
-   //  })
+   .state('home', {
+      url: '/',
+      templateUrl: 'templates/authentication.html',
+      controller: 'AuthCtrl as a'
+    })
 
-   //  .state('search', {
-   //    url: '/search',
-   //    templateUrl: 'templates/search_form.html',
-   //    controller: 'SearchFormCtrl as sf'
-   //  })
+    // .state('search', {
+    //   url: '/search',
+    //   templateUrl: 'templates/search_form.html',
+    //   controller: 'SearchFormCtrl as sf'
+    // })
 
     .state('search_results', {
       url: '/search_results',
@@ -54,11 +54,50 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.auth.controller
       controller: 'RecipeCtrl as r'
     })
 
-    // .state('user', {
-    //   url: '/users/:userId',
-    //   templateUrl: 'templates/user_show.html',
-    //   controller: 'UserCtrl as u'
-    // })
+    .state('user', {
+      url: '/user',
+      templateUrl: 'templates/user_show.html',
+      controller: 'UserCtrl as u'
+    })
 
-    $urlRouterProvider.otherwise('/search_results');
-  });
+    $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
+      return {
+        'request': function(config) {
+          config.headers = config.headers || {};
+          if ($localStorage.token) {
+              config.headers.Authorization = 'Bearer ' + $localStorage.token;
+          }
+          return config;
+        },
+        'responseError': function(response) {
+          if(response.status === 401 || response.status === 403) {
+              $location.path('/signin');
+          }
+          return $q.reject(response);
+        }
+      }
+    }]);
+
+    $urlRouterProvider.otherwise('/');
+  }])
+
+  .filter('formatTime', function() {
+    return function(sec) {
+      var mm = Math.floor(sec / 60);
+      var ss = sec - (mm * 60);
+
+      if (mm < 10) { mm = '0' + mm; }
+      if (ss < 10) { ss = '0' + ss; }
+
+      return mm + ':' + ss;
+    }
+  })
+
+  .filter('fraction', function() {
+    return function(input) {
+      firstSpace = input.indexOf(' ')
+      num = input.substr(0, firstSpace);
+      string = input.substr(firstSpace + 1);
+      return Ratio.parse(num).simplify().toLocaleString() + ' ' + string;
+    }
+  })
