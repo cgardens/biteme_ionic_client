@@ -281,5 +281,6 @@ angular.module('starter.recipe.controllers', [])
         },
       };
       annyang.addCommands(commands);
+      annyang.debug()
     };
   })

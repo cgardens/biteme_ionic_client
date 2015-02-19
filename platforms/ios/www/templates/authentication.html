@@ -1,5 +1,6 @@
 <ion-view view-title="Connect">
-  <ion-content>
+  <ion-content class='has-tabs'>
+    <ion-refresher ng-controller='a' on-refresh='doRefresh()'></ion-refresher>
     <h5 class='error' ng-bind='signup_error'></h5>
     <form>
       <div class='list'>

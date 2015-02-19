@@ -1,21 +1,20 @@
 <ion-view view-title='Search'>
-  <ion-content>
+  <ion-content class='has-tabs'>
     <form class='searchForm' ng-show='newSearch'>
-        <input ng-model='newSearch.term' type='text' placeholder='Enter Recipe...'>
+        <input ng-model='newSearch.term' type='text' placeholder='Find a Recipe'>
       <div class='buttonContainer'>
         <button class='mine' ng-click="getSearchResults()">Search</button>
       </div>
     </form>
-    <ul>
-      <ion-list>
-        <ion-item ng-repeat='recipe in recipes.results' href='#/recipes/{{recipe.recipeID}}'>
-          <h2>{{recipe.title}}</h2></a>
-            <!-- <a href='#/recipes/{{recipe.recipeID}}'><h2>{{recipe.title}}</h2></a> -->
-          <p>Rating: {{recipe.rating | number:1}} out of 5</p>
-          <img ng-src='{{recipe.imageURL}}' alt='recipe photo' style="width:100%">
-        </ion-item>
-      <ion-list>
-    </ul>
+    <ion-list>
+      <ion-item ng-repeat='recipe in recipes.results' href='#/recipes/{{recipe.recipeID}}'>
+        <div class='imgContainer' style='background-image: url({{recipe.imageURL}})'></div>
+        <div class='listTextContainer'>
+          <h2 ng-bind='recipe.title'></h2></a>
+          <p>Rating: <span ng-bind='recipe.rating | number : 1'></span> out of 5</p>
+        </div>
+      </ion-item>
+    <ion-list>
   </ion-content>
 </ion-view>
 

@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.services', 'starter.auth.controllers', 'starter.recipe.controllers', 'starter.search.controllers'])
+angular.module('starter', ['ionic', 'starter.auth.controllers', 'starter.recipe.controllers', 'starter.search.controllers', 'starter.user.controllers'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -36,16 +36,16 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.auth.controller
       controller: 'AuthCtrl as a'
     })
 
-    // .state('search', {
-    //   url: '/search',
-    //   templateUrl: 'templates/search_form.html',
-    //   controller: 'SearchFormCtrl as sf'
-    // })
-
-    .state('search_results', {
-      url: '/search_results',
+    .state('search', {
+      url: '/search',
       templateUrl: 'templates/search_results.html',
       controller: 'SearchResultCtrl as sr'
+    })
+
+    .state('new_recipe', {
+      url: '/recipes/new',
+      templateUrl: 'templates/new_recipe.html',
+      controller: 'NewRecipeCtrl as nr'
     })
 
     .state('recipe', {
