@@ -25,7 +25,7 @@ angular.module('starter.recipe.controllers', [])
       var instructions = $scope.recipe.instructions;
       for (i = 0; i < instructions.length; i++) {
         var instruction = instructions[i].toLowerCase().trim();
-        if (instruction.length > 2) { formattedInstructions.push(instruction.charAt(0).toUpperCase() + instruction.slice(1) + '.'); };
+        if (instruction.length > 2) { formattedInstructions.push(instruction.charAt(0).toUpperCase() + instruction.slice(1)); };
       }
       return formattedInstructions;
     };
@@ -284,6 +284,15 @@ angular.module('starter.recipe.controllers', [])
           $scope.setTimer(minutes);
           $scope.activateCaesar('I have set the timer for ' + minutes + ' minute.');
         },
+
+        // easter eggs
+        'caesar what is your favorite color': function() {
+          $scope.activateCaesar('Magenta, thank you for asking.');
+        },
+        'caesar tell me a joke': function() {
+          $scope.activateCaesar('Where do animals go when their tails fall off?');
+          $timeout( function(){ $scope.activateCaesar('The retail store.'); }, 5000);
+        }
       };
       annyang.addCommands(commands);
     };

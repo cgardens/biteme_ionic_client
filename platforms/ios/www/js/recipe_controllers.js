@@ -1,6 +1,6 @@
 angular.module('starter.recipe.controllers', [])
 
-  .controller('RecipeCtrl', function($scope, $http, $stateParams, $interval, $timeout, $localStorage, $ionicScrollDelegate) {
+  .controller('RecipeCtrl', function($scope, $http, $stateParams, $interval, $timeout, $localStorage, $ionicScrollDelegate, $location) {
     // formatting functions
     $scope.formatIngredients = function(multiplier) {
       var formattedIngredients = [];
@@ -25,13 +25,18 @@ angular.module('starter.recipe.controllers', [])
       var instructions = $scope.recipe.instructions;
       for (i = 0; i < instructions.length; i++) {
         var instruction = instructions[i].toLowerCase().trim();
-        if (instruction.length > 2) { formattedInstructions.push(instruction.charAt(0).toUpperCase() + instruction.slice(1) + '.'); };
+        if (instruction.length > 2) { formattedInstructions.push(instruction.charAt(0).toUpperCase() + instruction.slice(1)); };
       }
       return formattedInstructions;
     };
 
     // get request
-    $http.get('http://localhost:3000/recipes/' + $stateParams.recipeId)
+    if ($location.search().custom === 'true') {
+      url = 'http://localhost:3000/users/' + $localStorage.userID + '/customrecipe/' + $stateParams.recipeId;
+    } else {
+      url = 'http://localhost:3000/recipes/' + $stateParams.recipeId;
+    };
+    $http.get(url)
       .success(function(data) {
         $scope.recipe = data;
         $scope.ingredients = $scope.formatIngredients();
@@ -279,8 +284,16 @@ angular.module('starter.recipe.controllers', [])
           $scope.setTimer(minutes);
           $scope.activateCaesar('I have set the timer for ' + minutes + ' minute.');
         },
+
+        // easter eggs
+        'caesar what is your favorite color': function() {
+          $scope.activateCaesar('Magenta, thank you for asking.');
+        },
+        'caesar tell me a joke': function() {
+          $scope.activateCaesar('Where do animals go when their tails fall off?');
+          $timeout( function(){ $scope.activateCaesar('The retail store.'); }, 5000);
+        }
       };
       annyang.addCommands(commands);
-      annyang.debug()
     };
   })

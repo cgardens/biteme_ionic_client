@@ -32,31 +32,31 @@ angular.module('starter', ['ionic', 'starter.auth.controllers', 'starter.recipe.
   // setup an abstract state for the tabs directive
    .state('home', {
       url: '/',
-      templateUrl: 'templates/authentication.html',
+      templateUrl: './templates/authentication.html',
       controller: 'AuthCtrl as a'
     })
 
     .state('search', {
       url: '/search',
-      templateUrl: 'templates/search_results.html',
+      templateUrl: './templates/search_results.html',
       controller: 'SearchResultCtrl as sr'
     })
 
     .state('new_recipe', {
       url: '/recipes/new',
-      templateUrl: 'templates/new_recipe.html',
+      templateUrl: './templates/new_recipe.html',
       controller: 'NewRecipeCtrl as nr'
     })
 
     .state('recipe', {
       url: '/recipes/:recipeId',
-      templateUrl: 'templates/recipe_show.html',
+      templateUrl: './templates/recipe_show.html',
       controller: 'RecipeCtrl as r'
     })
 
     .state('user', {
       url: '/users',
-      templateUrl: 'templates/user_show.html',
+      templateUrl: './templates/user_show.html',
       controller: 'UserCtrl as u'
     })
 

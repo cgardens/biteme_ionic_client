@@ -1,6 +1,6 @@
 angular.module('starter.user.controllers', [])
 
-  .controller('UserCtrl', function($scope, $http, $stateParams, $localStorage, $timeout) {
+  .controller('UserCtrl', function($scope, $http, $stateParams, $localStorage, $timeout, $location) {
     $http.get('http://localhost:3000/users/' + $localStorage.userID)
       .success(function(data) {
         $scope.user = data.data;
@@ -8,10 +8,21 @@ angular.module('starter.user.controllers', [])
       .error(function(data) { console.log('Error: ' + data); })
     $http.get('http://localhost:3000/admin/users/' + $localStorage.userID + '/recipes')
       .success(function(data) {
-        $scope.recipes = data.recipes;
+        console.log(data)
+        $scope.recipes = [];
+        $scope.customRecipes = [];
+        for (i = 0; i < data.recipes.length; i++) {
+          if (data.recipes[i].customRecipe === true) {
+            $scope.customRecipes.push(data.recipes[i]);
+          } else {
+            $scope.recipes.push(data.recipes[i]);
+          }
+        }
       })
 
-    $scope.doRefresh = function() {
-      $timeout(function() { $scope.$broadcast('scroll.refreshComplete'); }, 1000);
-    }
+    $scope.logout = function() {
+      delete $localStorage.userID;
+      delete $localStorage.token;
+      $location.path('/')
+    };
   })

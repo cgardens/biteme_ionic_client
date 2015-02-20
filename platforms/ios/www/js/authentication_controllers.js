@@ -1,7 +1,7 @@
 angular.module('starter.auth.controllers', ['ngStorage'])
 
-  .controller('AuthCtrl', ['$scope', '$http','$localStorage', '$location', '$window', function($scope, $http, $localStorage, $location, $window, $broadcast) {
-    // if ($localStorage.userID) { $location.path('/search_results'); };
+  .controller('AuthCtrl', ['$scope', '$http','$localStorage', '$location', '$window', function($scope, $http, $localStorage, $location, $window) {
+    if ($localStorage.userID) { $location.path('/search'); };
 
     if ($location.search().id) {
       $localStorage.userID = $location.search().id;
@@ -19,17 +19,8 @@ angular.module('starter.auth.controllers', ['ngStorage'])
         })
     };
 
-    $scope.logout = function() {
-      delete $localStorage.userID;
-      delete $localStorage.token;
-    };
-
     $scope.userLoggedIn = function() {
       if ($localStorage.userID) { return true; }
       else { return false; }
-    }
-
-    $scope.doRefresh = function() {
-      $timeout(function() { $scope.$broadcast('scroll.refreshComplete'); }, 1000);
     }
   }]);
