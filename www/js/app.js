@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.auth.controllers', 'starter.recipe.controllers', 'starter.search.controllers', 'starter.user.controllers'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -21,7 +21,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -30,73 +30,74 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
-    url: "/tab",
-    abstract: true,
-    templateUrl: "templates/tabs.html"
-  })
+   .state('home', {
+      url: '/',
+      templateUrl: './templates/authentication.html',
+      controller: 'AuthCtrl as a'
+    })
 
-  // Each tab has its own nav history stack:
+    .state('search', {
+      url: '/search',
+      templateUrl: './templates/search_results.html',
+      controller: 'SearchResultCtrl as sr'
+    })
 
-  .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+    .state('new_recipe', {
+      url: '/recipes/new',
+      templateUrl: './templates/new_recipe.html',
+      controller: 'NewRecipeCtrl as nr'
+    })
+
+    .state('recipe', {
+      url: '/recipes/:recipeId',
+      templateUrl: './templates/recipe_show.html',
+      controller: 'RecipeCtrl as r'
+    })
+
+    .state('user', {
+      url: '/users',
+      templateUrl: './templates/user_show.html',
+      controller: 'UserCtrl as u'
+    })
+
+    $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
+      return {
+        'request': function(config) {
+          config.headers = config.headers || {};
+          if ($localStorage.token) {
+              config.headers.Authorization = 'Bearer ' + $localStorage.token;
+          }
+          return config;
+        },
+        'responseError': function(response) {
+          if(response.status === 401 || response.status === 403) {
+              $location.path('/signin');
+          }
+          return $q.reject(response);
+        }
       }
+    }]);
+
+    $urlRouterProvider.otherwise('/');
+  }])
+
+  .filter('formatTime', function() {
+    return function(sec) {
+      var mm = Math.floor(sec / 60);
+      var ss = sec - (mm * 60);
+
+      if (mm < 10) { mm = '0' + mm; }
+      if (ss < 10) { ss = '0' + ss; }
+
+      return mm + ':' + ss;
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
-      }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })
-
-  .state('tab.friends', {
-      url: '/friends',
-      views: {
-        'tab-friends': {
-          templateUrl: 'templates/tab-friends.html',
-          controller: 'FriendsCtrl'
-        }
-      }
-    })
-    .state('tab.friend-detail', {
-      url: '/friend/:friendId',
-      views: {
-        'tab-friends': {
-          templateUrl: 'templates/friend-detail.html',
-          controller: 'FriendDetailCtrl'
-        }
-      }
-    })
-
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
+  .filter('fraction', function() {
+    return function(input) {
+      firstSpace = input.indexOf(' ')
+      num = input.substr(0, firstSpace);
+      string = input.substr(firstSpace + 1);
+      return Ratio.parse(num).simplify().toLocaleString() + ' ' + string;
     }
-  });
-
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
-
-});
+  })
