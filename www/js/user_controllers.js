@@ -1,12 +1,12 @@
 angular.module('starter.user.controllers', [])
 
   .controller('UserCtrl', function($scope, $http, $stateParams, $localStorage, $timeout, $location) {
-    $http.get('http://localhost:3000/users/' + $localStorage.userID)
+    $http.get('http://bite-me-server.herokuapp.com/users/' + $localStorage.userID)
       .success(function(data) {
         $scope.user = data.data;
       })
       .error(function(data) { console.log('Error: ' + data); })
-    $http.get('http://localhost:3000/admin/users/' + $localStorage.userID + '/recipes')
+    $http.get('http://bite-me-server.herokuapp.com/admin/users/' + $localStorage.userID + '/recipes')
       .success(function(data) {
         console.log(data)
         $scope.recipes = [];

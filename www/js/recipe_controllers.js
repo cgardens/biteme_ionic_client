@@ -32,9 +32,9 @@ angular.module('starter.recipe.controllers', [])
 
     // get request
     if ($location.search().custom === 'true') {
-      url = 'http://localhost:3000/users/' + $localStorage.userID + '/customrecipe/' + $stateParams.recipeId;
+      url = 'http://bite-me-server.herokuapp.com/users/' + $localStorage.userID + '/customrecipe/' + $stateParams.recipeId;
     } else {
-      url = 'http://localhost:3000/recipes/' + $stateParams.recipeId;
+      url = 'http://bite-me-server.herokuapp.com/recipes/' + $stateParams.recipeId;
     };
     $http.get(url)
       .success(function(data) {
@@ -48,7 +48,7 @@ angular.module('starter.recipe.controllers', [])
 
     // save recipe
     $scope.saveRecipe = function() {
-      $http.post('http://localhost:3000/users/' + $localStorage.userID + '/recipes', { recipeToAdd: $scope.recipe.recipeID })
+      $http.post('http://bite-me-server.herokuapp.com/users/' + $localStorage.userID + '/recipes', { recipeToAdd: $scope.recipe.recipeID })
         .success(function(data) { $scope.saved = true; })
     };
 

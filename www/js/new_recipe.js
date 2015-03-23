@@ -9,7 +9,7 @@ angular.module('starter.recipe.controllers')
 
       recipe.instructions = formattedInstructions
 
-      $http.post('http://localhost:3000/users/' + $localStorage.userID + '/recipes/custom', { recipeToAdd: recipe })
+      $http.post('http://bite-me-server.herokuapp.com/users/' + $localStorage.userID + '/recipes/custom', { recipeToAdd: recipe })
         .success(function(data) {
           $scope.saved = true;
           $location.path('/user')

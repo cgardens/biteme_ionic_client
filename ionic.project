@@ -1,6 +1,6 @@
 {
   "name": "biteme_ionic_client",
-  "app_id": "0da4232d",
+  "app_id": "a0e76021",
   "gulpStartupTasks": [
     "sass",
     "watch"
